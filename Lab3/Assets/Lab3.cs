@@ -2,18 +2,19 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Lab3Projectile : MonoBehaviour
+public class Lab3 : MonoBehaviour
 {
-	public Rigidbody rb;
-	public float m_displacement;
+	public Transform referenceObj;
 	public float m_initialVelocity;
 	public float m_finalVelocity;
 	public float m_acceleration;
 	public float m_time;
-	public Vector3 m_forceDirection = Vector3.up;
 
+	private Rigidbody rb;
+	private Vector3 m_forceDirection = Vector3.up;
 	private Vector3 m_Impulse;
-	public bool m_isFlappyBird = false;
+	private float m_displacement;
+	private bool m_isFlappyBird = false;
 
 	private float CalcInitVelocity(float fVelocity, float displacement, float time)
 	{
@@ -22,11 +23,13 @@ public class Lab3Projectile : MonoBehaviour
 
 	private float CalcImpulse(float iV, float fV, float mass)
 	{
-		return ((fV - iV) * mass) / Time.deltaTime; 
+		return ((fV - iV) * mass) / 0.02f; 
 	}
 
 	void Start()
 	{
+		rb = GetComponent<Rigidbody>();
+		m_displacement = referenceObj.transform.position.y;
 		m_initialVelocity = CalcInitVelocity(m_finalVelocity, m_displacement, m_time);
 	}
 
